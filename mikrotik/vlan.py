@@ -98,8 +98,8 @@ class VlanInfo(object):
             print("Warning: PVID " + str(pvids[port]) + " is not in untagged vlans for port " + port + " on switch " + switchname)
 
         return {
-            'tagged': taggedVlans,
-            'untagged': untaggedVlans,
+            'tagged': sorted(taggedVlans),
+            'untagged': sorted(untaggedVlans),
             'pvid' :pvids[port]
         }
 

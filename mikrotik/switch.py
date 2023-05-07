@@ -20,6 +20,9 @@ class SwitchInfo(object):
                      'neighbors' : switch['neighbors']}
             self.switchDB[switch['name']] = entry
 
+    def getSwitchNames(self):
+        return self.switchDB.keys()
+
     def getNeighbors(self, switchname):
         neighbors = self.switchDB[switchname]['neighbors']
 
