@@ -13,3 +13,5 @@ with open(path, 'r') as stream:
 from vlan import VlanInfo
 vlanInfo = VlanInfo(config)
 vlanInfo.init()
+
+print(vlanInfo.getPortVlans('ka-10ge-sw1', 'sfp-sfpplus1'))

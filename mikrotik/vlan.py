@@ -31,6 +31,26 @@ class VlanInfo(object):
         # Get list of vlans from each switch
         for switch in self.switches['switches']:
             vlans = self._getVlans(switch['hostname'])
-            self.vlanDB[switch['name']] = [vlan for vlan in vlans]
+            switchVlans = [vlan for vlan in vlans]
 
+            vlanTemp = {}
 
+            for vlan in switchVlans:
+                taggedPorts = vlan['tagged'].split(',')
+                untaggedPorts = vlan['untagged'].split(',')
+                currentTaggedPorts = vlan['current-tagged'].split(',')
+                currentUntaggedPorts = vlan['current-untagged'].split(',')
+
+                vlanTemp[vlan['vlan-ids']] = {
+                    'tagged': taggedPorts,
+                    'untagged': untaggedPorts,
+                    'current-tagged': currentTaggedPorts,
+                    'current-untagged': currentUntaggedPorts
+                }
+
+            self.vlanDB[switch['name']] = vlanTemp
+
+    def getPortVlans(self, switchname, port):
+        # Get list of vlans from switch
+        vlans = self.vlanDB[switchname]
+        print(vlans)
