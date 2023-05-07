@@ -62,9 +62,11 @@ class VlanInfo(object):
 
                 if len(currentTaggedPorts) > len(taggedPorts):
                     print("Warning: Current tagged ports is greater than tagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
+                    print("Current tagged ports: " + str(currentTaggedPorts))
 
                 if len(currentUntaggedPorts) > len(untaggedPorts):
                     print("Warning: Current untagged ports is greater than untagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
+                    print("Current untagged ports: " + str(currentUntaggedPorts))
 
                 vlanTemp[vlan['vlan-ids']] = {
                     'tagged': taggedPorts,

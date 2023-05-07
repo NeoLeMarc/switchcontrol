@@ -72,6 +72,10 @@ for switchName in switchInfo.getSwitchNames():
         if len(vlanComparison['remote-only']) > 0:
             print("Warning: VLANs on remote port but not local port")
 
+        # warn if pvid mismatch
+        if localVlanInfo['pvid'] != remoteVlanInfo['pvid']:
+            print("Warning: PVID mismatch")
+
         print()
     print()
 
