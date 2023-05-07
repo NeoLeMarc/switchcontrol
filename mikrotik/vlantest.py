@@ -14,4 +14,9 @@ from vlan import VlanInfo
 vlanInfo = VlanInfo(config)
 vlanInfo.init()
 
+from switch import SwitchInfo
+switchInfo = SwitchInfo(config)
+switchInfo.init()
+
 print(vlanInfo.getPortVlans('ka-10ge-sw1', 'sfp-sfpplus1'))
+print(switchInfo.getNeighbors('ka-10ge-sw1'))

@@ -8,9 +8,6 @@ switches:
       - name: ka-10ge-sw3
         port: sfp-sfpplus8
 
-      - name: ka-sw2
-        port: sfp-sfpplus4
-
   - name: ka-10ge-sw3
     hostname: ka-10ge-sw3.wlan.ka.xcore.net
     neighbors:
