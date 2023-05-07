@@ -1,30 +1,30 @@
 switches:
-  - ka-10ge-sw1:
-      hostname: ka-10ge-sw.wlan.ka.xcore.net
-      neighbors:
-        - ka-sw3:
-            port: sfp-sfpplus3
+  - name: ka-10ge-sw1
+    hostname: ka-10ge-sw.wlan.ka.xcore.net
+    neighbors:
+      - name: ka-sw3
+        port: sfp-sfpplus3
 
-        - ka-10ge-sw3:
-            port: sfp-sfpplus8
+      - name: ka-10ge-sw3
+        port: sfp-sfpplus8
 
-        - ka-sw2:
-            port: sfp-sfpplus4
+      - name: ka-sw2
+        port: sfp-sfpplus4
 
-  - ka-10ge-sw3:
+  - name: ka-10ge-sw3
     hostname: ka-10ge-sw3.wlan.ka.xcore.net
     neighbors:
-      - ka-sw3:
-          port: sfp-sfpplus2
+      - name: ka-sw3
+        port: sfp-sfpplus2
 
-      - ka-10ge-sw1:
-          port: sfp-sfpplus1
+      - name: ka-10ge-sw1
+        port: sfp-sfpplus1
 
-  - ka-sw3:
+  - name: ka-sw3
     hostname: ka-sw3.wlan.ka.xcore.net
     neighbors:
-      - ka-10ge-sw1:
-          port: sfp-sfpplus1
+      - name: ka-10ge-sw1
+        port: sfp-sfpplus1
 
-      - ka-10ge-sw3:
-          port: sfp-sfpplus2
+      - name: ka-10ge-sw3
+        port: sfp-sfpplus2
