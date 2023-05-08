@@ -105,3 +105,8 @@ class VlanInfo(object):
             'pvid' :pvids[port]
         }
 
+    def getAllVlans(self):
+        vlanList = [switch['vlans'].keys() for switch in self.vlanDB.values()] 
+        # Unify list of lists into list
+        vlanList = list(set([item for sublist in vlanList for item in sublist]))
+        return vlanList

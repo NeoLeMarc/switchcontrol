@@ -51,6 +51,9 @@ def compareVlans(localVlanInfo, remoteVlanInfo):
 for switchName in switchInfo.getSwitchNames():
     print("Switch: {}".format(switchName))
     neighbors = switchInfo.getNeighbors(switchName)
+    trunkPorts = switchInfo.getTrunkPorts(switchName)
+
+    print("Neighbors:")
     for neighbor in neighbors:
         print(" Neighbor: {}".format(neighbor['name']))
         print("  Local Port: {}".format(neighbor['local-port']))
@@ -77,15 +80,20 @@ for switchName in switchInfo.getSwitchNames():
             print("Warning: PVID mismatch")
 
         print()
+
+    for trunkPort in trunkPorts:
+        print(" Trunk Port: {}".format(trunkPort))
+        localVlanInfo = vlanInfo.getPortVlans(switchName, trunkPort['port'])
+        print("  VLANs:  " + str(localVlanInfo))
+
+        vlanComparison = compareVlans(localVlanInfo, {'tagged' : vlanInfo.getAllVlans(), 'untagged' : []})
+
+        if len(vlanComparison['local-only']) > 0:
+            print("Warning: unknown VLANs on trunk: {}".format(vlanComparison['local-only']))
+
+        if len(vlanComparison['remote-only']) > 0:
+            print("Warning: VLANS missing from trunk port: {}".format(vlanComparison['remote-only']))
+
+        print()
     print()
 
-#neighbors = switchInfo.getNeighbors('ka-10ge-sw1')
-#for neighbor in neighbors:
-#    print("Neighbor: {}".format(neighbor['name']))
-#    localVlanInfo = vlanInfo.getPortVlans('ka-10ge-sw1', neighbor['local-port'])
-#    remoteVlanInfo = vlanInfo.getPortVlans(neighbor['name'], neighbor['remote-port'])
-#    print("LOCAL:  " + str(localVlanInfo))
-#    print("REMOTE: " + str(remoteVlanInfo))
-#    print()
-#    print()
-#

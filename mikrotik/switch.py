@@ -17,7 +17,8 @@ class SwitchInfo(object):
     def _buildSwitchDB(self):
         for switch in self.switches['switches']:
             entry = {'hostname': switch['hostname'],
-                     'neighbors' : switch['neighbors']}
+                     'neighbors' : switch['neighbors'],
+                     'trunk-ports' : switch['trunk-ports']}
             self.switchDB[switch['name']] = entry
 
     def getSwitchNames(self):
@@ -44,3 +45,7 @@ class SwitchInfo(object):
             neighborInfos.append(neighborInfo)
 
         return neighborInfos
+
+    def getTrunkPorts(self, switchname):
+        trunkPorts = self.switchDB[switchname]['trunk-ports']
+        return trunkPorts
