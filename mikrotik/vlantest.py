@@ -86,7 +86,7 @@ for switchName in switchInfo.getSwitchNames():
         localVlanInfo = vlanInfo.getPortVlans(switchName, trunkPort['port'])
         print("  VLANs:  " + str(localVlanInfo))
 
-        vlanComparison = compareVlans(localVlanInfo, {'tagged' : vlanInfo.getAllVlans(), 'untagged' : []})
+        vlanComparison = compareVlans(localVlanInfo, {'tagged' : vlanInfo.getNonSpecialVlans(), 'untagged' : []})
 
         if len(vlanComparison['local-only']) > 0:
             print("Warning: unknown VLANs on trunk: {}".format(vlanComparison['local-only']))

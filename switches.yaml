@@ -1,3 +1,8 @@
+vlans:
+  special-vlans:
+    - 99
+    - 101
+
 switches:
   - name: ka-10ge-sw1
     hostname: ka-10ge-sw.wlan.ka.xcore.net

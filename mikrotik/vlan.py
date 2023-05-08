@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 import librouteros
 import yaml
+import switch
 
 class VlanInfo(object):
     def __init__(self, config):
         self.config = config
         self.vlanDB = {}
+        self.switchInfo = switch.SwitchInfo(config)
+        self.switchInfo.init()
 
         ## load switches from yaml
         with open('../switches.yaml', 'r') as stream:
@@ -110,3 +113,10 @@ class VlanInfo(object):
         # Unify list of lists into list
         vlanList = list(set([item for sublist in vlanList for item in sublist]))
         return vlanList
+
+    def getNonSpecialVlans(self):
+        specialVlans = self.switchInfo.getSpecialVlans()
+        allVlans = self.getAllVlans()
+        nonSpecialVlans = [vlan for vlan in allVlans if vlan not in specialVlans]
+        return nonSpecialVlans
+

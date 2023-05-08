@@ -49,3 +49,6 @@ class SwitchInfo(object):
     def getTrunkPorts(self, switchname):
         trunkPorts = self.switchDB[switchname]['trunk-ports']
         return trunkPorts
+
+    def getSpecialVlans(self):
+        return self.switches['vlans']['special-vlans']
