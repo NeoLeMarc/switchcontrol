@@ -120,3 +120,7 @@ class VlanInfo(object):
         nonSpecialVlans = [vlan for vlan in allVlans if vlan not in specialVlans]
         return nonSpecialVlans
 
+    def getSpecialVlans(self):
+        specialVlans = self.switchInfo.getSpecialVlans()
+        return specialVlans
+
