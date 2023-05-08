@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# import formating and priting functions
+from common import *
+
 # Read username and password from config file
 import yaml
 
@@ -83,22 +86,32 @@ def printTrunkPort(switchName, trunkPort):
     vlanComparison = compareVlans(localVlanInfo, {'tagged' : vlanInfo.getNonSpecialVlans(), 'untagged' : []})
 
     if len(vlanComparison['local-only']) > 0 and len([vlan for vlan in vlanComparison['local-only'] if vlan not in vlanInfo.getSpecialVlans()]) > 0:
-        print("Warning: unknown VLANs on trunk: {}".format(vlanComparison['local-only']))
+        printWarning("  Warning: unknown VLANs on trunk: {}".format(vlanComparison['local-only']))
 
     if len(vlanComparison['remote-only']) > 0:
-        print("Warning: VLANS missing from trunk port: {}".format(vlanComparison['remote-only']))
+        printError("  ERROR: VLANS {} missing from trunk port {} on switch {}".format(vlanComparison['remote-only'], trunkPort['port'], switchName))
 
     print()
 
+def printVlanNames(switchName):
+    print("VLAN names on switch {}".format(switchName))
+    vlans = vlanInfo.getVlanNames(switchName)
+    for vlanId in sorted(vlans.keys()):
+        print("  VLAN {}: {}".format(vlanId, vlans[vlanId]))
+
 for switchName in switchInfo.getSwitchNames():
-    print("Switch: {}".format(switchName))
+    printHeadline("Switch: {}".format(switchName))
     neighbors = switchInfo.getNeighbors(switchName)
     trunkPorts = switchInfo.getTrunkPorts(switchName)
+
+    print("VLAN names:")
+    printVlanNames(switchName)
 
     print("Neighbors:")
     for neighbor in neighbors:
         printNeighbor(switchName, neighbor)
 
+    print("Trunk Ports:")
     for trunkPort in trunkPorts:
         printTrunkPort(switchName, trunkPort)
     print()

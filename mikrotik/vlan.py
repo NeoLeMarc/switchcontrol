@@ -3,6 +3,7 @@
 import librouteros
 import yaml
 import switch
+from common import *
 
 class VlanInfo(object):
     def __init__(self, config):
@@ -30,7 +31,7 @@ class VlanInfo(object):
         vlans = connection(cmd='/interface/bridge/vlan/print')
         return vlans
 
-    def getPvids(self, host):
+    def _getPvids(self, host):
         # Get port information from switch
         connection = librouteros.connect(
             host=host,
@@ -48,12 +49,31 @@ class VlanInfo(object):
 
         return pvids
 
+    def _getVlanNames(self, host):
+        # Get list of VLANs
+        connection = librouteros.connect(
+            host=host,
+            username=self.config['auth']['username'],
+            password=self.config['auth']['password'],
+            use_ssl=True
+        )
+
+        vlans = connection(cmd='/interface/vlan/print')
+
+        # Extract vlan names from vlans
+        vlanNames = {}
+        for vlan in vlans:
+            vlanNames[vlan['vlan-id']] = vlan['name']
+
+        return vlanNames
+
     def _buildVlanDB(self):
         # Get list of vlans from each switch
         for switch in self.switches['switches']:
             vlans = self._getVlans(switch['hostname'])
             switchVlans = [vlan for vlan in vlans]
-            pvids = self.getPvids(switch['hostname'])
+            pvids = self._getPvids(switch['hostname'])
+            vlanNames = self._getVlanNames(switch['hostname'])
 
             vlanTemp = {}
 
@@ -64,11 +84,11 @@ class VlanInfo(object):
                 currentUntaggedPorts = vlan['current-untagged'].split(',')
 
                 if len(currentTaggedPorts) > len(taggedPorts):
-                    print("Warning: Current tagged ports is greater than tagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
+                    printWarning("Warning: Current tagged ports is greater than tagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
                     print("Current tagged ports: " + str(currentTaggedPorts))
 
                 if len(currentUntaggedPorts) > len(untaggedPorts):
-                    print("Warning: Current untagged ports is greater than untagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
+                    printWarning("Warning: Current untagged ports is greater than untagged ports for vlan " + str(vlan['vlan-ids']) + " on switch " + switch['name'])
                     print("Current untagged ports: " + str(currentUntaggedPorts))
 
                 vlanTemp[vlan['vlan-ids']] = {
@@ -79,7 +99,7 @@ class VlanInfo(object):
 
                 }
 
-            self.vlanDB[switch['name']] = {'vlans' : vlanTemp, 'pvids': pvids}
+            self.vlanDB[switch['name']] = {'vlans' : vlanTemp, 'pvids': pvids, 'vlanNames': vlanNames}
 
     def getPortVlans(self, switchname, port):
         # Get list of vlans from switch
@@ -100,13 +120,16 @@ class VlanInfo(object):
                 untaggedVlans.append(vlan)
 
         if pvids[port] not in untaggedVlans:
-            print("Warning: PVID " + str(pvids[port]) + " is not in untagged vlans for port " + port + " on switch " + switchname)
+            printWarning("Warning: PVID " + str(pvids[port]) + " is not in untagged vlans for port " + port + " on switch " + switchname)
 
         return {
             'tagged': sorted(taggedVlans),
             'untagged': sorted(untaggedVlans),
             'pvid' :pvids[port]
         }
+
+    def getVlanNames(self, switchname):
+        return self.vlanDB[switchname]['vlanNames']
 
     def getAllVlans(self):
         vlanList = [switch['vlans'].keys() for switch in self.vlanDB.values()] 
