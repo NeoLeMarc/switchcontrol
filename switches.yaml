@@ -8,6 +8,17 @@ switches:
       - name: ka-10ge-sw3
         port: sfp-sfpplus8
 
+    trunk-ports:
+      - name: ka-sw2
+        port: sfp-sfpplus7
+
+      - name: outpost01
+        port: sfp-sfpplus5
+
+      - name: polarstern
+        port: sfp-sfpplus1
+        
+
   - name: ka-10ge-sw3
     hostname: ka-10ge-sw3.wlan.ka.xcore.net
     neighbors:
@@ -17,6 +28,22 @@ switches:
       - name: ka-10ge-sw1
         port: sfp-sfpplus1
 
+    trunk-ports:
+      - name: ka-sw1
+        port: ether1
+
+      - name: miranda
+        port: sfp-sfpplus5
+
+      - name: rubble
+        port: sfp-sfpplus7
+
+      - name: polarstern
+        port: sfp-sfpplus4
+
+      - name: ka-sw2
+        port: sfp-sfpplus3
+
   - name: ka-sw3
     hostname: ka-sw3.wlan.ka.xcore.net
     neighbors:
@@ -25,3 +52,7 @@ switches:
 
       - name: ka-10ge-sw3
         port: sfp-sfpplus2
+
+    trunk-ports:
+      - name: outpost01
+        port: ether1
