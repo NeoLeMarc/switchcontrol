@@ -6,10 +6,11 @@ class SwitchInfo(object):
     def __init__(self, config):
         self.config = config
         self.switchDB = {}
+        site = self.config['site']
 
         ## load switches from yaml
         with open('../switches.yaml', 'r') as stream:
-            self.switches = yaml.safe_load(stream)
+            self.switches = yaml.safe_load(stream)[site]
 
     def init(self):
         self._buildSwitchDB()

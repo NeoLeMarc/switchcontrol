@@ -1,63 +1,89 @@
-vlans:
-  special-vlans:
-    - 99
-    - 101
+xcore.net:
+  vlans:
+    special-vlans:
+      - 99
+      - 101
 
-switches:
-  - name: ka-10ge-sw1
-    hostname: ka-10ge-sw.wlan.ka.xcore.net
-    neighbors:
-      - name: ka-sw3
-        port: sfp-sfpplus3
+  switches:
+    - name: ka-10ge-sw1
+      hostname: ka-10ge-sw.wlan.ka.xcore.net
+      neighbors:
+        - name: ka-sw3
+          port: sfp-sfpplus3
 
-      - name: ka-10ge-sw3
-        port: sfp-sfpplus8
+        - name: ka-10ge-sw3
+          port: sfp-sfpplus8
 
-    trunk-ports:
-      - name: ka-sw2
-        port: sfp-sfpplus7
+      trunk-ports:
+        - name: ka-sw2
+          port: sfp-sfpplus7
 
-      - name: outpost01
-        port: sfp-sfpplus5
+        - name: outpost01
+          port: sfp-sfpplus5
 
-      - name: polarstern
-        port: sfp-sfpplus1
-        
+        - name: polarstern
+          port: sfp-sfpplus1
+          
 
-  - name: ka-10ge-sw3
-    hostname: ka-10ge-sw3.wlan.ka.xcore.net
-    neighbors:
-      - name: ka-sw3
-        port: sfp-sfpplus2
+    - name: ka-10ge-sw3
+      hostname: ka-10ge-sw3.wlan.ka.xcore.net
+      neighbors:
+        - name: ka-sw3
+          port: sfp-sfpplus2
 
-      - name: ka-10ge-sw1
-        port: sfp-sfpplus1
+        - name: ka-10ge-sw1
+          port: sfp-sfpplus1
 
-    trunk-ports:
-      - name: ka-sw1
-        port: ether1
+      trunk-ports:
+        - name: ka-sw1
+          port: ether1
 
-      - name: miranda
-        port: sfp-sfpplus5
+        - name: miranda
+          port: sfp-sfpplus5
 
-      - name: rubble
-        port: sfp-sfpplus7
+        - name: rubble
+          port: sfp-sfpplus7
 
-      - name: polarstern
-        port: sfp-sfpplus4
+        - name: polarstern
+          port: sfp-sfpplus4
 
-      - name: ka-sw2
-        port: sfp-sfpplus3
+        - name: ka-sw2
+          port: sfp-sfpplus3
 
-  - name: ka-sw3
-    hostname: ka-sw3.wlan.ka.xcore.net
-    neighbors:
-      - name: ka-10ge-sw1
-        port: sfp-sfpplus1
+    - name: ka-sw3
+      hostname: ka-sw3.wlan.ka.xcore.net
+      neighbors:
+        - name: ka-10ge-sw1
+          port: sfp-sfpplus1
 
-      - name: ka-10ge-sw3
-        port: sfp-sfpplus2
+        - name: ka-10ge-sw3
+          port: sfp-sfpplus2
 
-    trunk-ports:
-      - name: outpost01
-        port: ether1
+      trunk-ports:
+        - name: outpost01
+          port: ether1
+
+PremiumProduction:
+  vlans:
+    special-vlans:
+
+  switches:
+    - name: sw-100ge-oben
+      hostname: sw-100ge-oben.premium.lan
+      neighbors:
+      trunk-ports:
+
+    - name: sw-100ge-unten
+      hostname: sw-100ge-unten.premium.lan
+      neighbors:
+      trunk-ports:
+
+    - name: sw-100ge-neu
+      hostname: sw-100ge-neu.premium.lan
+      neighbors:
+      trunk-ports:
+
+    - name: sw-100ge-25-editor
+      hostname: sw-100ge-25-editor.premium.lan
+      neighbors:
+      trunk-ports:
