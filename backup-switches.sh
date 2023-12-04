@@ -8,3 +8,4 @@ git add **/*.rsc
 git commit -m "backup of config - created from host $HOSTNAME"
 git pull
 git push origin
+git push github
