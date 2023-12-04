@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-eval ssh-agent
+eval `ssh-agent`
 ssh-add ~/.ssh/id_rsa_unattended
 cd mikrotik
 python3 download-config.py all -w
